@@ -1,4 +1,4 @@
-# 3D Graphics Benchmark PoC
+# (WIP) 3D Graphics Benchmark PoC
 
 A demo showing an example of graphics benchmark using GDScript.
 
