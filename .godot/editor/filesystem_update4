@@ -1,6 +1,0 @@
-res://QualitySettingsBenchmarker/Benchmark1.tscn
-res://control.tscn
-res://3d_scene.tscn
-res://settings.gd
-res://QualitySettingsResource/quality_settings_resource.gd
-res://QualitySettingsBenchmarker/Benchmark.gd
