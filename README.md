@@ -1,33 +1,22 @@
-# 3D Graphics Settings
+# 3D Graphics Benchmark PoC
 
-A demo showing an example of a graphics settings menu.
+A demo showing an example of graphics benchmark using GDScript.
 
-Included settings are:
+The objective is to set the user's graphic settings automatically, using the most compatible graphic settings the user can render at the threshold FPS.
 
-**Video settings:**
+The project flow goes as follows:
 
-- UI scale.
-- Resolution scale.
-- Display filter (bilinear or AMD FidelityFX Super Resolution 1.0).
-- Fullscreen.
-- V-Sync (traditional and adaptive).
-- Anti-aliasing (MSAA and FXAA).
-- Camera field of view.
+1. The game starts.
+2. A "Benchmark" scene is instanced.
+3. The `benchmark()` function is called. The `benchmark()` first disables the main viewport (to avoid noise in the render timestamp of the benchmark), and test each `GraphicSettings` resource set at the "Benchmark" scene sequentially (those are the `GraphicSettings` it may return). For each `GraphicSettings` to test:
+   a. The `GraphicSettings` is applied to the benchmark viewport.
+   b. `RenderingServer.force_draw()` is called, and the call duration is stored using `Time.get_unix_time_from_system()`.
+   c. If the render duration is bigger than a threshold, skips the rest of the test (user hardware is too slow for the Graphic settings, so there is no need to test further). Else, store the duration and test X more times, storing the average render frame time.
+4. `benchmark()` returns the optimal `GraphicSettings` resource (the setting with the highest render frame time, which is the highest graphic setting below the frame time threshold).
+5. The optimal `GraphicSettings` is applied to the root viewport.
 
-**Effect settings:**
+# TODOs / Need investigation
 
-- Signed distance field global illumination (SDFGI).
-- Bloom (glow).
-- Screen-space ambient occlusion (SSAO).
-- Screen-Space reflections (SSR).
-- Screen-space indirect lighting (SSIL).
-- Volumetric fog.
-- Screen adjustments: brightness, contrast, saturation.
-
-Language: GDScript
-
-Renderer: Vulkan Clustered
-
-## Screenshots
-
-![Screenshot](screenshots/interface.png)
+- first rendertime of graphic settings takes more time than the others.
+- render-time -> fps approximation?
+- how UE does its threshold for the render-time
