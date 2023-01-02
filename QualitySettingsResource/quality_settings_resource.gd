@@ -246,6 +246,7 @@ func apply_settings(viewport: Viewport, environment: Environment) -> void:
 	viewport.scaling_3d_scale = scaling_3d_value
 	viewport.scaling_3d_mode = scaling_3d_mode
 
+	# ISSUE: https://github.com/godotengine/godot/issues/70837
 	DisplayServer.window_set_vsync_mode(vsync_mode)
 
 	viewport.msaa_3d = msaa_3d_mode
