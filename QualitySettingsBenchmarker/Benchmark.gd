@@ -7,7 +7,6 @@ extends Node
 @export var world_environment: WorldEnvironment
 
 @export_category("Benchmark Settings")
-@export var number_of_frames = 10
 @export var target_render_time = 0.0166 # Approximately 60 fps 
 
 @onready var benchmark_results : Array :
@@ -19,44 +18,81 @@ extends Node
 
 func benchmark() -> QualitySettingsResource:
 	_benchmark_results.clear()
+	
+	var rendering_device := RenderingServer.get_rendering_device()
 	var window_viewport_rid = get_tree().root.get_viewport_rid()
+	
 	RenderingServer.viewport_set_update_mode(window_viewport_rid,RenderingServer.VIEWPORT_UPDATE_DISABLED)
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	
 	for settings in quality_settings_resources:
 		settings.apply_settings(viewport, world_environment.environment)
-		var avg_render_time = 0.0
-		
-		# force rendering one frame before test
-		RenderingServer.force_draw(false)
-		
-		var RENDER_TIME_THRESHOLD := target_render_time * 10.0
-		var rendering_device := RenderingServer.get_rendering_device()
+
 		var last_device_timestamp := 0
-		print("======= TEST: %s =======", settings.to_string())
-		for i in range(number_of_frames):
-			rendering_device.capture_timestamp("timestamp")
-			var timestamp = Time.get_unix_time_from_system()
-			RenderingServer.force_draw(false)
-			var render_time := Time.get_unix_time_from_system() - timestamp
-			var device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
-			var device_timestamp_diff := (device_timestamp - last_device_timestamp)/1000000000.0
-			
-			print("device_timestamp_diff: %f" % device_timestamp_diff)
-			print("render_time: %fs" % render_time)
-			
-			last_device_timestamp = device_timestamp
-			
-			# too slow, no need to test further
-			if render_time > RENDER_TIME_THRESHOLD:
-				avg_render_time = -1.0
-				break
-			
-			avg_render_time += render_time
+		var RENDER_TIME_THRESHOLD := target_render_time * 10.0
+		var FRAME_DELAY := rendering_device.get_frame_delay() # 4 frames seems like it's the number of inaccurate frames?
 		
-		if avg_render_time != -1.0:
-			avg_render_time /= number_of_frames
-		_benchmark_results.append(avg_render_time)
+		var benchmark_result := {
+			&"failed": false,
+			&"unix_time_avg": 0.0,
+			&"device_timestamp_avg": 0.0,
+			&"unix_time_variance": 0.0,
+			&"device_timestamp_variance": 0.0,
+		}
+		
+		print("")
+		print("==== FRAME DELAY ====")
+		print("")
+		
+		for i in range(FRAME_DELAY + 1):
+			var frame := _capture_render_time(rendering_device)
+			if frame[&"unix_time_diff"] > RENDER_TIME_THRESHOLD:
+				benchmark_result[&"failed"] = true
+				break
+		
+		print("")
+		print("==== BENCHMARK ====")
+		print("")
+		
+		var frames := []
+		
+		if not benchmark_result[&"failed"]:
+			for i in range(10):
+				var frame := _capture_render_time(rendering_device)
+				if frame[&"unix_time_diff"] > RENDER_TIME_THRESHOLD:
+					benchmark_result[&"failed"] = true
+					break
+				frames.append(frame)
+
+		if not benchmark_result[&"failed"]:
+			var unix_time_total := 0.0
+			var device_timestamp_total := 0.0
+			
+			for frame in frames:
+				unix_time_total += frame[&"unix_time_diff"]
+				device_timestamp_total += frame[&"device_timestamp_diff"]
+			
+			var unix_time_avg := unix_time_total / 10.0
+			var device_timestamp_avg := device_timestamp_total / 10.0
+			
+			var unix_time_variance := 0.0
+			var device_timestamp_variance := 0.0
+			
+			for frame in frames:
+				var variance_diff = (frame[&"unix_time_diff"] - unix_time_avg)
+				unix_time_variance += variance_diff * variance_diff
+				variance_diff = (frame[&"device_timestamp_diff"] - device_timestamp_avg)
+				device_timestamp_variance += variance_diff * variance_diff
+			
+			unix_time_variance /= 10.0
+			device_timestamp_variance /= 10.0
+			
+			benchmark_result[&"unix_time_avg"] = unix_time_avg
+			benchmark_result[&"device_timestamp_avg"] = device_timestamp_avg
+			benchmark_result[&"unix_time_variance"] = unix_time_variance
+			benchmark_result[&"device_timestamp_variance"] = device_timestamp_variance
+		
+		_benchmark_results.append(benchmark_result)
 	
 	print(_benchmark_results)
 	
@@ -64,3 +100,23 @@ func benchmark() -> QualitySettingsResource:
 	viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
 	
 	return QualitySettingsResource.new()
+
+
+func _capture_render_time(rendering_device: RenderingDevice) -> Dictionary:
+	rendering_device.capture_timestamp("timestamp")
+	var timestamp := Time.get_unix_time_from_system()
+	var last_device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
+	
+	RenderingServer.force_draw(false)
+	
+	var unix_time_diff := Time.get_unix_time_from_system() - timestamp
+	var device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
+	var device_timestamp_diff := (device_timestamp - last_device_timestamp)/1000000000.0
+	
+	print("device_timestamp_diff: %fs" % device_timestamp_diff)
+	print("unix_time_diff: %fs" % unix_time_diff)
+	
+	return {
+		&"device_timestamp_diff": device_timestamp_diff,
+		&"unix_time_diff": unix_time_diff,
+	}
