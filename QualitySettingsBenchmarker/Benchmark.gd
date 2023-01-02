@@ -31,13 +31,21 @@ func benchmark() -> QualitySettingsResource:
 		RenderingServer.force_draw(false)
 		
 		var RENDER_TIME_THRESHOLD := target_render_time * 10.0
-		
+		var rendering_device := RenderingServer.get_rendering_device()
+		var last_device_timestamp := 0
 		print("======= TEST: %s =======", settings.to_string())
 		for i in range(number_of_frames):
+			rendering_device.capture_timestamp("timestamp")
 			var timestamp = Time.get_unix_time_from_system()
 			RenderingServer.force_draw(false)
 			var render_time := Time.get_unix_time_from_system() - timestamp
-			print(render_time)
+			var device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
+			var device_timestamp_diff := (device_timestamp - last_device_timestamp)/1000000000.0
+			
+			print("device_timestamp_diff: %f" % device_timestamp_diff)
+			print("render_time: %fs" % render_time)
+			
+			last_device_timestamp = device_timestamp
 			
 			# too slow, no need to test further
 			if render_time > RENDER_TIME_THRESHOLD:

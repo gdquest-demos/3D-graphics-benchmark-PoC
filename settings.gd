@@ -17,16 +17,12 @@ extends Control
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey:
 		if event.is_pressed():
-			if event.keycode == KEY_A:
-				var benchmark_scene = load("res://QualitySettingsBenchmarker/Benchmark1.tscn").instantiate()
-				add_child(benchmark_scene)
-			if event.keycode == KEY_D:
-				var node = get_node("Benchmark1")
-				node.queue_free()
 			if event.keycode == KEY_T:
-				var node = get_node("Benchmark1")
-				node.benchmark()
+				var benchmark_node = load("res://QualitySettingsBenchmarker/Benchmark1.tscn").instantiate()
+				add_child(benchmark_node)
+				benchmark_node.benchmark()
 				quality_settings.apply_settings(get_tree().root, world_environment.environment)
+				benchmark_node.queue_free()
 
 
 func _ready() -> void:
