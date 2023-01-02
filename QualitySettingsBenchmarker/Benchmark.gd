@@ -29,7 +29,6 @@ func benchmark() -> QualitySettingsResource:
 		
 		# force rendering one frame before test
 		RenderingServer.force_draw(false)
-		await RenderingServer.frame_post_draw # TODO: not sure if this helps?
 		
 		var RENDER_TIME_THRESHOLD := target_render_time * 10.0
 		
