@@ -103,10 +103,10 @@ func benchmark() -> QualitySettingsResource:
 
 
 func _capture_render_time(rendering_device: RenderingDevice) -> Dictionary:
-	rendering_device.capture_timestamp("timestamp")
 	var timestamp := Time.get_unix_time_from_system()
 	var last_device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
 	
+	rendering_device.capture_timestamp("timestamp")
 	RenderingServer.force_draw(false)
 	
 	var unix_time_diff := Time.get_unix_time_from_system() - timestamp
