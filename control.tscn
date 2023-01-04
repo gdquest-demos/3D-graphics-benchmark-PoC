@@ -48,6 +48,7 @@ environment = SubResource("Environment_1f0b2")
 [node name="Node3D" parent="." instance=ExtResource("2_hsbu5")]
 
 [node name="SettingsMenu" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -400,6 +401,7 @@ step = 0.01
 value = 1.0
 
 [node name="HideShowButton" type="Button" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 149.0
 offset_bottom = 31.0
