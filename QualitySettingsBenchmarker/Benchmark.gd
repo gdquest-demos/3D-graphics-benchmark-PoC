@@ -29,8 +29,8 @@ func benchmark() -> QualitySettingsResource:
 		settings.apply_settings(viewport, world_environment.environment)
 
 		var last_device_timestamp := 0
-		var RENDER_TIME_THRESHOLD := target_render_time * 10.0
-		var FRAME_DELAY := rendering_device.get_frame_delay() # 4 frames seems like it's the number of inaccurate frames?
+		var RENDER_TIME_THRESHOLD := 0.5 #target_render_time * 10.0
+		var FRAME_DELAY := rendering_device.get_frame_delay()
 		
 		var benchmark_result := {
 			&"failed": false,
@@ -45,7 +45,7 @@ func benchmark() -> QualitySettingsResource:
 		print("")
 		
 		for i in range(FRAME_DELAY + 1):
-			var frame := _capture_render_time(rendering_device)
+			var frame := _capture_render_time(rendering_device, false)
 			if frame[&"unix_time_diff"] > RENDER_TIME_THRESHOLD:
 				benchmark_result[&"failed"] = true
 				break
@@ -58,7 +58,7 @@ func benchmark() -> QualitySettingsResource:
 		
 		if not benchmark_result[&"failed"]:
 			for i in range(10):
-				var frame := _capture_render_time(rendering_device)
+				var frame := _capture_render_time(rendering_device, true)
 				if frame[&"unix_time_diff"] > RENDER_TIME_THRESHOLD:
 					benchmark_result[&"failed"] = true
 					break
@@ -102,16 +102,24 @@ func benchmark() -> QualitySettingsResource:
 	return QualitySettingsResource.new()
 
 
-func _capture_render_time(rendering_device: RenderingDevice) -> Dictionary:
-	var timestamp := Time.get_unix_time_from_system()
-	var last_device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
+func _capture_render_time(rendering_device: RenderingDevice, benchmark: bool) -> Dictionary:
+	var timestamp := 0.0
+	var last_device_timestamp := 0
+	
+	if benchmark:
+		timestamp = Time.get_unix_time_from_system()
+		last_device_timestamp = rendering_device.get_captured_timestamp_gpu_time(0)
 	
 	rendering_device.capture_timestamp("timestamp")
 	RenderingServer.force_draw(false)
 	
-	var unix_time_diff := Time.get_unix_time_from_system() - timestamp
-	var device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
-	var device_timestamp_diff := (device_timestamp - last_device_timestamp)/1000000000.0
+	var unix_time_diff := 0.0
+	var device_timestamp_diff = 0.0
+	
+	if benchmark:
+		unix_time_diff = Time.get_unix_time_from_system() - timestamp
+		var device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
+		device_timestamp_diff = (device_timestamp - last_device_timestamp)/1000000000.0
 	
 	print("device_timestamp_diff: %fs" % device_timestamp_diff)
 	print("unix_time_diff: %fs" % unix_time_diff)
