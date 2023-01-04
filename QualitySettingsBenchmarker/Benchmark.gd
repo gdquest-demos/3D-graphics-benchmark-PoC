@@ -16,7 +16,7 @@ extends Node
 @onready var _benchmark_results = []
 
 
-func benchmark() -> QualitySettingsResource:
+func benchmark() -> void:
 	_benchmark_results.clear()
 	
 	var rendering_device := RenderingServer.get_rendering_device()
@@ -94,12 +94,8 @@ func benchmark() -> QualitySettingsResource:
 		
 		_benchmark_results.append(benchmark_result)
 	
-	print(_benchmark_results)
-	
 	RenderingServer.viewport_set_update_mode(window_viewport_rid, RenderingServer.VIEWPORT_UPDATE_ALWAYS)
 	viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
-	
-	return QualitySettingsResource.new()
 
 
 func _capture_render_time(rendering_device: RenderingDevice, benchmark: bool) -> Dictionary:

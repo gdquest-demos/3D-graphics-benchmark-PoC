@@ -1,7 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ye05btta37gb"]
+[gd_scene load_steps=9 format=3 uid="uid://ye05btta37gb"]
 
 [ext_resource type="Script" path="res://settings.gd" id="1_gm54x"]
+[ext_resource type="Resource" path="res://QualitySettingsResource/high_settings.tres" id="2_fei54"]
 [ext_resource type="PackedScene" uid="uid://cbdt8lmycl8pc" path="res://3d_scene.tscn" id="2_hsbu5"]
+[ext_resource type="Resource" path="res://QualitySettingsResource/low_settings.tres" id="3_8u7wq"]
+[ext_resource type="Resource" uid="uid://3kbxxfjunbb1" path="res://QualitySettingsResource/medium_settings.tres" id="3_lhrrf"]
 [ext_resource type="Texture2D" uid="uid://c5ujmv8i0y1pn" path="res://icon.png" id="3_xpykm"]
 
 [sub_resource type="Environment" id="Environment_1f0b2"]
@@ -36,6 +39,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gm54x")
+high_quality_settings = ExtResource("2_fei54")
+medium_quality_settings = ExtResource("3_lhrrf")
+low_quality_settings = ExtResource("3_8u7wq")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_1f0b2")
@@ -43,6 +49,7 @@ environment = SubResource("Environment_1f0b2")
 [node name="Node3D" parent="." instance=ExtResource("2_hsbu5")]
 
 [node name="SettingsMenu" type="PanelContainer" parent="."]
+layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 429.0
@@ -51,32 +58,36 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_w3j8l")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="SettingsMenu"]
 clip_contents = false
+layout_mode = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsMenu/ScrollContainer"]
-offset_right = 362.0
-offset_bottom = 544.0
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/separation = 10
 
 [node name="UISection" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer"]
 visible = false
+layout_mode = 2
 theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
 text = "User Interface Settings"
 horizontal_alignment = 1
 
 [node name="GridContainer" type="GridContainer" parent="SettingsMenu/ScrollContainer/VBoxContainer"]
 visible = false
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 columns = 2
 
 [node name="UIScaleLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "UI Scale:"
 
 [node name="UIScaleOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 5
@@ -93,19 +104,23 @@ popup/item_4/text = "Larger (200%)"
 popup/item_4/id = 4
 
 [node name="ViewportSection" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
 text = "Video Settings"
 horizontal_alignment = 1
 
 [node name="GridContainer2" type="GridContainer" parent="SettingsMenu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 columns = 2
 
 [node name="QualityLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Resolution Scale:"
 
 [node name="QualitySlider" type="HSlider" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 min_value = 0.25
@@ -114,11 +129,13 @@ step = 0.05
 value = 1.0
 
 [node name="FilterLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Display Filter:"
 
 [node name="FilterOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 2
@@ -130,12 +147,14 @@ popup/item_1/id = 1
 
 [node name="FullscreenLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
 visible = false
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Fullscreen:"
 
 [node name="FullscreenOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
 visible = false
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 2
@@ -146,11 +165,13 @@ popup/item_1/text = "Enabled"
 popup/item_1/id = 1
 
 [node name="VsyncLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "V-Sync:"
 
 [node name="VsyncOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 3
@@ -163,11 +184,13 @@ popup/item_2/text = "Enabled"
 popup/item_2/id = 2
 
 [node name="AALabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Anti-Aliasing (MSAA):"
 
 [node name="AAOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 4
@@ -182,11 +205,13 @@ popup/item_3/text = "8× (Slower)"
 popup/item_3/id = 3
 
 [node name="FXAALabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Anti-Aliasing (FXAA):"
 
 [node name="FXAAOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 2
@@ -197,19 +222,23 @@ popup/item_1/text = "FXAA (Fast)"
 popup/item_1/id = 1
 
 [node name="EnvironmentSection" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.683425, 0.916893, 1, 1)
 text = "Effect Settings"
 horizontal_alignment = 1
 
 [node name="GridContainer3" type="GridContainer" parent="SettingsMenu/ScrollContainer/VBoxContainer"]
+layout_mode = 2
 columns = 2
 
 [node name="SDFGILabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Global Illumination:"
 
 [node name="SDFGIOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 3
@@ -222,11 +251,13 @@ popup/item_2/text = "High (Slow)"
 popup/item_2/id = 2
 
 [node name="GlowLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Bloom:"
 
 [node name="GlowOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 3
@@ -239,11 +270,13 @@ popup/item_2/text = "High (Average)"
 popup/item_2/id = 2
 
 [node name="SSAOLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Ambient Occlusion:"
 
 [node name="SSAOOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 5
@@ -260,11 +293,13 @@ popup/item_4/text = "High (Slow)"
 popup/item_4/id = 4
 
 [node name="SSReflectionsLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 14
 text = "Screen-Space Reflections:"
 
 [node name="SSReflectionsOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 4
@@ -279,11 +314,13 @@ popup/item_3/text = "High (Slower)"
 popup/item_3/id = 3
 
 [node name="SSILLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Screen-Space Lighting:"
 
 [node name="SSILOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 5
@@ -300,11 +337,13 @@ popup/item_4/text = "High (Slower)"
 popup/item_4/id = 4
 
 [node name="VolumetricFogLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Volumetric Fog:"
 
 [node name="VolumetricFogOptionButton" type="OptionButton" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 item_count = 3
@@ -317,11 +356,13 @@ popup/item_2/text = "High (Average)"
 popup/item_2/id = 2
 
 [node name="BrightnessLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Brightness:"
 
 [node name="BrightnessSlider" type="HSlider" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 min_value = 0.5
@@ -330,11 +371,13 @@ step = 0.01
 value = 1.0
 
 [node name="ContrastLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Contrast:"
 
 [node name="ContrastSlider" type="HSlider" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 min_value = 0.5
@@ -343,11 +386,13 @@ step = 0.01
 value = 1.0
 
 [node name="SaturationLabel" type="Label" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 theme_override_font_sizes/font_size = 16
 text = "Saturation:"
 
 [node name="SaturationSlider" type="HSlider" parent="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer3"]
+layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 min_value = 0.01
@@ -356,6 +401,7 @@ step = 0.01
 value = 1.0
 
 [node name="HideShowButton" type="Button" parent="."]
+layout_mode = 0
 offset_right = 149.0
 offset_bottom = 31.0
 focus_mode = 0
@@ -365,6 +411,7 @@ button_pressed = true
 text = "Hide settings"
 
 [node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -377,17 +424,20 @@ grow_vertical = 0
 texture = ExtResource("3_xpykm")
 
 [node name="FPSLabel" type="Label" parent="."]
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -56.0
-offset_top = 16.0
+offset_top = 2.0
 offset_right = -16.0
-offset_bottom = 39.0
+offset_bottom = 25.0
 grow_horizontal = 0
 horizontal_alignment = 2
 
 [node name="ResolutionLabel" type="Label" parent="."]
+visible = false
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -397,6 +447,123 @@ offset_right = -16.0
 offset_bottom = 71.0
 grow_horizontal = 0
 horizontal_alignment = 2
+
+[node name="SettingsButtons" type="VBoxContainer" parent="."]
+layout_mode = 1
+offset_left = 977.0
+offset_top = 68.0
+offset_right = 1124.0
+offset_bottom = 579.0
+
+[node name="ApplyLowButton" type="Button" parent="SettingsButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Apply Low
+"
+
+[node name="ApplyMediumButton" type="Button" parent="SettingsButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Apply Medium
+"
+
+[node name="ApplyHighButton" type="Button" parent="SettingsButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Apply High
+"
+
+[node name="ResultsPanel" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = 437.0
+offset_top = 10.0
+offset_right = 962.0
+offset_bottom = 583.0
+color = Color(0, 0, 0, 0.439216)
+
+[node name="ResultTitle" type="Label" parent="ResultsPanel"]
+layout_mode = 2
+offset_left = 210.0
+offset_top = 14.0
+offset_right = 293.0
+offset_bottom = 40.0
+size_flags_horizontal = 3
+text = "Results:"
+horizontal_alignment = 1
+
+[node name="ResultScreen" type="VBoxContainer" parent="ResultsPanel"]
+layout_mode = 0
+offset_left = 126.0
+offset_top = 58.0
+offset_right = 392.0
+offset_bottom = 569.0
+
+[node name="ResultLowLabel" type="Label" parent="ResultsPanel/ResultScreen"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VSeparator" type="HSeparator" parent="ResultsPanel/ResultScreen"]
+layout_mode = 2
+
+[node name="ResultMediumLabel" type="Label" parent="ResultsPanel/ResultScreen"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="VSeparator2" type="HSeparator" parent="ResultsPanel/ResultScreen"]
+layout_mode = 2
+
+[node name="ResultHighLabel" type="Label" parent="ResultsPanel/ResultScreen"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ResultScreenLabels" type="VBoxContainer" parent="ResultsPanel"]
+layout_mode = 1
+offset_left = 13.0
+offset_top = 58.0
+offset_right = 111.0
+offset_bottom = 568.0
+
+[node name="ResultLowLabel" type="Label" parent="ResultsPanel/ResultScreenLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Low"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResultMediumLabel" type="Label" parent="ResultsPanel/ResultScreenLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Medium"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResultHighLabel" type="Label" parent="ResultsPanel/ResultScreenLabels"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "High"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BenchmarkButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 591.0
+offset_top = 592.0
+offset_right = 797.0
+offset_bottom = 637.0
+text = "Benchmark"
 
 [connection signal="item_selected" from="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer/UIScaleOptionButton" to="." method="_on_ui_scale_option_button_item_selected"]
 [connection signal="value_changed" from="SettingsMenu/ScrollContainer/VBoxContainer/GridContainer2/QualitySlider" to="." method="_on_quality_slider_value_changed"]
