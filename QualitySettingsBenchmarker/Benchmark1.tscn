@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bajdb7s8k0ql8"]
+[gd_scene load_steps=8 format=3 uid="uid://bajdb7s8k0ql8"]
 
 [ext_resource type="PackedScene" uid="uid://cbdt8lmycl8pc" path="res://3d_scene.tscn" id="1_dkbbt"]
 [ext_resource type="Script" path="res://QualitySettingsBenchmarker/Benchmark.gd" id="1_q5rdi"]
@@ -6,11 +6,21 @@
 [ext_resource type="Resource" uid="uid://3kbxxfjunbb1" path="res://QualitySettingsResource/medium_settings.tres" id="3_ftiwf"]
 [ext_resource type="Resource" path="res://QualitySettingsResource/high_settings.tres" id="3_h1u8o"]
 
+[sub_resource type="World3D" id="World3D_31uuy"]
+
 [sub_resource type="Environment" id="Environment_3lyhe"]
 
 [node name="Benchmark1" type="Window" node_paths=PackedStringArray("viewport", "world_environment")]
 own_world_3d = true
+world_3d = SubResource("World3D_31uuy")
+use_debanding = true
+audio_listener_enable_2d = true
+audio_listener_enable_3d = true
+physics_object_picking = true
+positional_shadow_atlas_size = 4096
 size = Vector2i(1152, 648)
+content_scale_mode = 1
+content_scale_aspect = 1
 script = ExtResource("1_q5rdi")
 quality_settings_resources = [ExtResource("2_vbow1"), ExtResource("3_ftiwf"), ExtResource("3_h1u8o")]
 viewport = NodePath(".")

@@ -23,6 +23,8 @@ func benchmark() -> void:
 	var window_viewport_rid = get_tree().root.get_viewport_rid()
 	var benchmark_viewport_rid = viewport.get_viewport_rid()
 	
+#	viewport.world_3d = get_tree().root.world_3d
+	
 	RenderingServer.viewport_set_update_mode(window_viewport_rid, RenderingServer.VIEWPORT_UPDATE_DISABLED)
 	RenderingServer.viewport_set_update_mode(benchmark_viewport_rid, RenderingServer.VIEWPORT_UPDATE_ALWAYS)
 	

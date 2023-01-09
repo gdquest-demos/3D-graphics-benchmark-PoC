@@ -33,6 +33,11 @@ config/icon="res://icon.png"
 
 [display]
 
+window/dpi/allow_hidpi=false
+window/ios/allow_high_refresh_rate=false
+window/ios/hide_home_indicator=false
+window/ios/hide_status_bar=false
+window/ios/suppress_ui_gesture=false
 window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 
