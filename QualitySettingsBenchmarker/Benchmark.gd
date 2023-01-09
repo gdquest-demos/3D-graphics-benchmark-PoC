@@ -3,11 +3,11 @@ extends Node
 
 @export_category("Configuration")
 @export var quality_settings_resources: Array[QualitySettingsResource] = []
-@export var viewport: SubViewport
+@export var viewport: Viewport
 @export var world_environment: WorldEnvironment
 
 @export_category("Benchmark Settings")
-@export var target_render_time = 0.0166 # Approximately 60 fps 
+@export var target_render_time = 0.0166 # Approximately 60 fps
 
 @onready var benchmark_results : Array :
 	get:
@@ -21,9 +21,10 @@ func benchmark() -> void:
 	
 	var rendering_device := RenderingServer.get_rendering_device()
 	var window_viewport_rid = get_tree().root.get_viewport_rid()
+	var benchmark_viewport_rid = viewport.get_viewport_rid()
 	
-	RenderingServer.viewport_set_update_mode(window_viewport_rid,RenderingServer.VIEWPORT_UPDATE_DISABLED)
-	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
+	RenderingServer.viewport_set_update_mode(window_viewport_rid, RenderingServer.VIEWPORT_UPDATE_DISABLED)
+	RenderingServer.viewport_set_update_mode(benchmark_viewport_rid, RenderingServer.VIEWPORT_UPDATE_ALWAYS)
 	
 	for settings in quality_settings_resources:
 		settings.apply_settings(viewport, world_environment.environment)
@@ -95,7 +96,7 @@ func benchmark() -> void:
 		_benchmark_results.append(benchmark_result)
 	
 	RenderingServer.viewport_set_update_mode(window_viewport_rid, RenderingServer.VIEWPORT_UPDATE_ALWAYS)
-	viewport.render_target_update_mode = SubViewport.UPDATE_DISABLED
+	RenderingServer.viewport_set_update_mode(benchmark_viewport_rid, RenderingServer.VIEWPORT_UPDATE_DISABLED)
 
 
 func _capture_render_time(rendering_device: RenderingDevice, benchmark: bool) -> Dictionary:

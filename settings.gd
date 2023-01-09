@@ -6,7 +6,6 @@ extends Control
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var camera := $Node3D/Camera3D
 @onready var fps_label := $FPSLabel
-@onready var resolution_label := $ResolutionLabel
 
 @export var high_quality_settings: QualitySettingsResource
 @export var medium_quality_settings: QualitySettingsResource

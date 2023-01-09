@@ -33,6 +33,7 @@ config/icon="res://icon.png"
 
 [display]
 
+window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 
 [rendering]

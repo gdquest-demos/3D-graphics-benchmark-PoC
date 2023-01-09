@@ -8,10 +8,9 @@
 
 [sub_resource type="Environment" id="Environment_3lyhe"]
 
-[node name="Benchmark1" type="SubViewport" node_paths=PackedStringArray("viewport", "world_environment")]
+[node name="Benchmark1" type="Window" node_paths=PackedStringArray("viewport", "world_environment")]
 own_world_3d = true
 size = Vector2i(1152, 648)
-render_target_update_mode = 0
 script = ExtResource("1_q5rdi")
 quality_settings_resources = [ExtResource("2_vbow1"), ExtResource("3_ftiwf"), ExtResource("3_h1u8o")]
 viewport = NodePath(".")
