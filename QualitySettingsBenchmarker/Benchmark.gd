@@ -26,6 +26,9 @@ func benchmark() -> void:
 	RenderingServer.viewport_set_measure_render_time(viewport.get_viewport_rid(), true)
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	
+	# TODO: Does this helps getting better results?
+	await RenderingServer.frame_post_draw
+	
 	for settings in quality_settings_resources:
 		settings.apply_settings(viewport, world_environment.environment)
 
@@ -105,7 +108,7 @@ func _capture_render_time(rendering_device: RenderingDevice, benchmark: bool) ->
 	if benchmark:
 		timestamp = Time.get_unix_time_from_system()
 	
-	RenderingServer.force_draw(false)
+	RenderingServer.force_draw(true)
 	
 	var unix_time_diff := 0.0
 	var device_timestamp_diff = 0.0

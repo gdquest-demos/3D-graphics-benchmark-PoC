@@ -6,7 +6,6 @@ extends Control
 @onready var world_environment: WorldEnvironment = $WorldEnvironment
 @onready var camera := $Node3D/Camera3D
 @onready var fps_label := $FPSLabel
-@onready var resolution_label := $ResolutionLabel
 
 @export var high_quality_settings: QualitySettingsResource
 @export var medium_quality_settings: QualitySettingsResource
@@ -40,7 +39,7 @@ func _ready() -> void:
 func _on_benchmark_pressed() -> void:
 	var benchmark_node = load("res://QualitySettingsBenchmarker/Benchmark1.tscn").instantiate()
 	add_child(benchmark_node)
-	benchmark_node.benchmark()
+	await benchmark_node.benchmark()
 	_set_result_label(benchmark_node.benchmark_results[0], quality_low_label)
 	_set_result_label(benchmark_node.benchmark_results[1], quality_medium_label)
 	_set_result_label(benchmark_node.benchmark_results[2], quality_high_label)
