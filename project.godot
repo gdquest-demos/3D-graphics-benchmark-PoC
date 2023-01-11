@@ -12,7 +12,7 @@ _global_script_classes=[{
 "base": "Node",
 "class": &"QualitySettingsBenchmark",
 "language": &"GDScript",
-"path": "res://QualitySettingsBenchmarker/Benchmark.gd"
+"path": "res://QualitySettingsBenchmark/Benchmark.gd"
 }, {
 "base": "Resource",
 "class": &"QualitySettingsResource",

@@ -1,0 +1,23 @@
+[gd_scene load_steps=7 format=3 uid="uid://cl4xum825btw8"]
+
+[ext_resource type="Script" path="res://QualitySettingsBenchmark/Benchmark.gd" id="1_av48l"]
+[ext_resource type="Resource" path="res://QualitySettingsResource/low_settings.tres" id="2_slssq"]
+[ext_resource type="Resource" uid="uid://3kbxxfjunbb1" path="res://QualitySettingsResource/medium_settings.tres" id="3_qw8tg"]
+[ext_resource type="Resource" path="res://QualitySettingsResource/high_settings.tres" id="4_qwa1x"]
+[ext_resource type="PackedScene" uid="uid://cbdt8lmycl8pc" path="res://3d_scene.tscn" id="5_kitqk"]
+
+[sub_resource type="Environment" id="Environment_3lyhe"]
+
+[node name="Benchmark1" type="SubViewport" node_paths=PackedStringArray("viewport", "world_environment")]
+own_world_3d = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 0
+script = ExtResource("1_av48l")
+quality_settings_resources = [ExtResource("2_slssq"), ExtResource("3_qw8tg"), ExtResource("4_qwa1x")]
+viewport = NodePath(".")
+world_environment = NodePath("WorldEnvironment")
+
+[node name="Node3D" parent="." instance=ExtResource("5_kitqk")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_3lyhe")

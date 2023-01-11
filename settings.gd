@@ -37,7 +37,7 @@ func _ready() -> void:
 
 
 func _on_benchmark_pressed() -> void:
-	var benchmark_node = load("res://QualitySettingsBenchmarker/Benchmark1.tscn").instantiate()
+	var benchmark_node = load("res://Benchmark1.tscn").instantiate()
 	add_child(benchmark_node)
 	await benchmark_node.benchmark()
 	_set_result_label(benchmark_node.benchmark_results[0], quality_low_label)
