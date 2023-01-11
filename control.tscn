@@ -41,7 +41,6 @@ environment = SubResource("Environment_1f0b2")
 [node name="Node3D" parent="." instance=ExtResource("2_hsbu5")]
 
 [node name="FPSLabel" type="Label" parent="."]
-layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -53,7 +52,6 @@ grow_horizontal = 0
 horizontal_alignment = 2
 
 [node name="SettingsButtons" type="VBoxContainer" parent="."]
-layout_mode = 0
 offset_left = 823.0
 offset_top = 68.0
 offset_right = 970.0
@@ -61,27 +59,23 @@ offset_bottom = 579.0
 
 [node name="ApplyLowButton" type="Button" parent="SettingsButtons"]
 unique_name_in_owner = true
-layout_mode = 2
 size_flags_vertical = 3
 text = "Apply Low
 "
 
 [node name="ApplyMediumButton" type="Button" parent="SettingsButtons"]
 unique_name_in_owner = true
-layout_mode = 2
 size_flags_vertical = 3
 text = "Apply Medium
 "
 
 [node name="ApplyHighButton" type="Button" parent="SettingsButtons"]
 unique_name_in_owner = true
-layout_mode = 2
 size_flags_vertical = 3
 text = "Apply High
 "
 
 [node name="ResultsPanel" type="ColorRect" parent="."]
-layout_mode = 0
 offset_left = 283.0
 offset_top = 10.0
 offset_right = 808.0
@@ -89,7 +83,6 @@ offset_bottom = 583.0
 color = Color(0, 0, 0, 0.439216)
 
 [node name="ResultTitle" type="Label" parent="ResultsPanel"]
-layout_mode = 0
 offset_left = 210.0
 offset_top = 14.0
 offset_right = 293.0
@@ -99,7 +92,6 @@ text = "Results:"
 horizontal_alignment = 1
 
 [node name="ResultScreen" type="VBoxContainer" parent="ResultsPanel"]
-layout_mode = 0
 offset_left = 126.0
 offset_top = 58.0
 offset_right = 392.0
@@ -107,37 +99,30 @@ offset_bottom = 569.0
 
 [node name="ResultLowLabel" type="Label" parent="ResultsPanel/ResultScreen"]
 unique_name_in_owner = true
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VSeparator" type="HSeparator" parent="ResultsPanel/ResultScreen"]
-layout_mode = 2
 
 [node name="ResultMediumLabel" type="Label" parent="ResultsPanel/ResultScreen"]
 unique_name_in_owner = true
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="VSeparator2" type="HSeparator" parent="ResultsPanel/ResultScreen"]
-layout_mode = 2
 
 [node name="ResultHighLabel" type="Label" parent="ResultsPanel/ResultScreen"]
 unique_name_in_owner = true
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ResultScreenLabels" type="VBoxContainer" parent="ResultsPanel"]
-layout_mode = 0
 offset_left = 13.0
 offset_top = 58.0
 offset_right = 111.0
 offset_bottom = 568.0
 
 [node name="ResultLowLabel" type="Label" parent="ResultsPanel/ResultScreenLabels"]
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Low"
@@ -145,7 +130,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ResultMediumLabel" type="Label" parent="ResultsPanel/ResultScreenLabels"]
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "Medium"
@@ -153,7 +137,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ResultHighLabel" type="Label" parent="ResultsPanel/ResultScreenLabels"]
-layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 text = "High"
@@ -162,7 +145,6 @@ vertical_alignment = 1
 
 [node name="BenchmarkButton" type="Button" parent="."]
 unique_name_in_owner = true
-layout_mode = 0
 offset_left = 437.0
 offset_top = 592.0
 offset_right = 643.0

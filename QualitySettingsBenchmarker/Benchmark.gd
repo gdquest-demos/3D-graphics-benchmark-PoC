@@ -23,6 +23,7 @@ func benchmark() -> void:
 	var window_viewport_rid = get_tree().root.get_viewport_rid()
 	
 	RenderingServer.viewport_set_update_mode(window_viewport_rid,RenderingServer.VIEWPORT_UPDATE_DISABLED)
+	RenderingServer.viewport_set_measure_render_time(viewport.get_viewport_rid(), true)
 	viewport.render_target_update_mode = SubViewport.UPDATE_ALWAYS
 	
 	for settings in quality_settings_resources:
@@ -100,13 +101,10 @@ func benchmark() -> void:
 
 func _capture_render_time(rendering_device: RenderingDevice, benchmark: bool) -> Dictionary:
 	var timestamp := 0.0
-	var last_device_timestamp := 0
-	
+
 	if benchmark:
 		timestamp = Time.get_unix_time_from_system()
-		last_device_timestamp = rendering_device.get_captured_timestamp_gpu_time(0)
 	
-	rendering_device.capture_timestamp("timestamp")
 	RenderingServer.force_draw(false)
 	
 	var unix_time_diff := 0.0
@@ -114,8 +112,7 @@ func _capture_render_time(rendering_device: RenderingDevice, benchmark: bool) ->
 	
 	if benchmark:
 		unix_time_diff = Time.get_unix_time_from_system() - timestamp
-		var device_timestamp := rendering_device.get_captured_timestamp_gpu_time(0)
-		device_timestamp_diff = (device_timestamp - last_device_timestamp)/1000000000.0
+		device_timestamp_diff = RenderingServer.viewport_get_measured_render_time_gpu(viewport.get_viewport_rid())/1000.0
 	
 	print("device_timestamp_diff: %fs" % device_timestamp_diff)
 	print("unix_time_diff: %fs" % unix_time_diff)
